@@ -6,14 +6,14 @@
 
 // @lc code=start
 function twoSum(nums: number[], target: number): number[] {
-  const valToIndex = new Map<number, number>();
+  const valToIndex: { [key: number]: number } = {};
 
   for (let i = 0; i < nums.length; i++) {
     const pairVal = target - nums[i];
-    const pairIndex = valToIndex.get(pairVal);
+    const pairIndex = valToIndex[pairVal];
     if (pairIndex !== undefined) return [pairIndex, i];
 
-    valToIndex.set(nums[i], i);
+    valToIndex[nums[i]] = i;
   }
 
   // for (let i = 0; i < nums.length - 1; i++) {
