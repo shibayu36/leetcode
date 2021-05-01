@@ -23,5 +23,5 @@ function twoSum(nums: number[], target: number): number[] {
   //     if (nums[i] + nums[j] === target) return [i, j]
   //   }
   // }
-};
+}
 // @lc code=end
