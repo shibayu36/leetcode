@@ -6,46 +6,31 @@
 
 // @lc code=start
 function maxArea(height: number[]): number {
-  // console.log("start");
-  const leftCandidates: number[] = [];
-  const rightCandidates: number[] = [];
-
-  {
-    let currentHeight = 0;
-    for (let i = 0; i < height.length; i++) {
-      if (height[i] > currentHeight) {
-        leftCandidates.push(i);
-        currentHeight = height[i];
-      }
-    }
-  }
-
-  {
-    let currentHeight = 0;
-    for (let j = height.length - 1; j >= 0; j--) {
-      if (height[j] > currentHeight) {
-        rightCandidates.push(j);
-        currentHeight = height[j];
-      }
-    }
-  }
-
   let maxWater = 0;
-  for (const left of leftCandidates) {
-    for (const right of rightCandidates) {
-      if (left >= right) continue;
-      const water = (right - left) * Math.min(height[right], height[left]);
-      // console.log({ left, right, water });
-      if (water > maxWater) maxWater = water;
+  let left = 0;
+  let right = height.length - 1;
+
+  while (left < right) {
+    const water = (right - left) * Math.min(height[right], height[left]);
+    if (water > maxWater) maxWater = water;
+
+    // 左辺・右辺の高さが低い方に面積は制限される。幅が狭くなっても
+    // 面積が広くなるのは高さが高くなる時だけなので、そのような辺を探す。
+    if (height[left] <= height[right]) {
+      const currentLeftHeight = height[left];
+      left++;
+      while (height[left] < currentLeftHeight && left < height.length) {
+        left++;
+      }
+    } else {
+      const currentRightHeight = height[right];
+      right--;
+      while (height[right] < currentRightHeight && right > 0) {
+        right--;
+      }
     }
   }
 
-  // for (let i = 0; i < height.length - 1; i++) {
-  //   for (let j = i + 1; j < height.length; j++) {
-  //     const water = (j - i) * Math.min(height[i], height[j]);
-  //     if (water > maxWater) maxWater = water;
-  //   }
-  // }
   return maxWater;
 }
 // @lc code=end
