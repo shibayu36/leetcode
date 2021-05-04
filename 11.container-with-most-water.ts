@@ -6,32 +6,40 @@
 
 // @lc code=start
 function maxArea(height: number[]): number {
-  console.log("start");
-  let maxWater = 0;
-  let left = 0;
-  let right = height.length - 1;
-  let leftTurn = true;
-  while (left < right) {
-    const water = (right - left) * Math.min(height[right], height[left]);
-    console.log({ left, right, water });
-    if (water > maxWater) maxWater = water;
+  // console.log("start");
+  const leftCandidates: number[] = [];
+  const rightCandidates: number[] = [];
 
-    if (leftTurn) {
-      const currentLeftHeight = height[left];
-      left++;
-      while (height[left] < currentLeftHeight && left < height.length) {
-        left++;
-      }
-    } else {
-      const currentRightHeight = height[right];
-      right--;
-      while (height[right] < currentRightHeight && right > 0) {
-        right--;
+  {
+    let currentHeight = 0;
+    for (let i = 0; i < height.length; i++) {
+      if (height[i] > currentHeight) {
+        leftCandidates.push(i);
+        currentHeight = height[i];
       }
     }
-
-    leftTurn = !leftTurn;
   }
+
+  {
+    let currentHeight = 0;
+    for (let j = height.length - 1; j >= 0; j--) {
+      if (height[j] > currentHeight) {
+        rightCandidates.push(j);
+        currentHeight = height[j];
+      }
+    }
+  }
+
+  let maxWater = 0;
+  for (const left of leftCandidates) {
+    for (const right of rightCandidates) {
+      if (left >= right) continue;
+      const water = (right - left) * Math.min(height[right], height[left]);
+      // console.log({ left, right, water });
+      if (water > maxWater) maxWater = water;
+    }
+  }
+
   // for (let i = 0; i < height.length - 1; i++) {
   //   for (let j = i + 1; j < height.length; j++) {
   //     const water = (j - i) * Math.min(height[i], height[j]);
