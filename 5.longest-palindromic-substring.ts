@@ -27,6 +27,6 @@ function isPalindrome(s: string, start: number, end: number, cache: PalindromeCa
     return cache[start][end] as boolean;
   }
 
-  return (cache[start][end] = s.charAt(start) === s.charAt(end) && isPalindrome(s, start + 1, end - 1, cache));
+  return (cache[start][end] = isPalindrome(s, start + 1, end - 1, cache) && s.charAt(start) === s.charAt(end));
 }
 // @lc code=end
