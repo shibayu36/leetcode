@@ -14,3 +14,4 @@ function isPalindrome(x: number): boolean {
   return x === target;
 }
 // @lc code=end
+export {};
