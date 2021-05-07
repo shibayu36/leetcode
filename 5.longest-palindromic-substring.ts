@@ -6,35 +6,60 @@
 
 // @lc code=start
 function longestPalindrome(s: string): string {
-  // 文字列sのi~jが回文かどうか dp[i][j]
-  // - dp[n][n] なら true
-  // - dp[n][n+1]なら、s[i] === s[i + 1]
-  // - dp[i][j] = dp[i+1][j-1] && s[i] === s[j]
-  const dp: (boolean | undefined)[][] = Array.from(new Array(s.length), () => new Array(s.length));
-
+  let longest = "";
   for (let i = 0; i < s.length; i++) {
-    dp[i][i] = true;
-  }
+    const odd = palindromeAroundCenter(s, i, i);
+    if (odd.length > longest.length) longest = odd;
 
-  let longest = s.charAt(0);
-  for (let len = 2; len <= s.length; len++) {
-    for (let start = 0; start + len <= s.length; start++) {
-      const end = start + len - 1;
-      if (start + 1 === end) {
-        dp[start][end] = s.charAt(start) === s.charAt(end);
-      } else {
-        dp[start][end] = dp[start + 1][end - 1] && s.charAt(start) === s.charAt(end);
-      }
-
-      if (dp[start][end]) {
-        longest = s.substring(start, end + 1);
-      }
-    }
+    const even = palindromeAroundCenter(s, i, i + 1);
+    if (even.length > longest.length) longest = even;
   }
 
   return longest;
 }
+
+function palindromeAroundCenter(s: string, l: number, r: number): string {
+  let left = l;
+  let right = r;
+  while (left >= 0 && right < s.length && s.charAt(left) === s.charAt(right)) {
+    left--;
+    right++;
+  }
+  // 最後のleft/rightは一致しなくなった場所なので、substringで考慮する
+  return s.substring(left + 1, right);
+}
 // @lc code=end
+
+// ===== 効率の良い動的計画法パターン =====
+// function longestPalindrome(s: string): string {
+//   // 文字列sのi~jが回文かどうか dp[i][j]
+//   // - dp[n][n] なら true
+//   // - dp[n][n+1]なら、s[i] === s[i + 1]
+//   // - dp[i][j] = dp[i+1][j-1] && s[i] === s[j]
+//   const dp: (boolean | undefined)[][] = Array.from(new Array(s.length), () => new Array(s.length));
+
+//   for (let i = 0; i < s.length; i++) {
+//     dp[i][i] = true;
+//   }
+
+//   let longest = s.charAt(0);
+//   for (let len = 2; len <= s.length; len++) {
+//     for (let start = 0; start + len <= s.length; start++) {
+//       const end = start + len - 1;
+//       if (start + 1 === end) {
+//         dp[start][end] = s.charAt(start) === s.charAt(end);
+//       } else {
+//         dp[start][end] = dp[start + 1][end - 1] && s.charAt(start) === s.charAt(end);
+//       }
+
+//       if (dp[start][end]) {
+//         longest = s.substring(start, end + 1);
+//       }
+//     }
+//   }
+
+//   return longest;
+// }
 
 // ===== memo化しようとしてみたパターン =====
 // function longestPalindrome(s: string): string {
