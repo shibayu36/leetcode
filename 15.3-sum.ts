@@ -34,6 +34,19 @@ function threeSum(nums: number[]): number[][] {
     }
   }
 
-  return answers;
+  return uniqBy(answers, (a) => a.join("-"));
+}
+
+function uniqBy<T>(array: T[], func: (item: T) => unknown) {
+  const map = new Map<unknown, boolean>();
+  return array.filter((i) => {
+    const key = func(i);
+    if (map.has(key)) {
+      return false;
+    } else {
+      map.set(key, true);
+      return true;
+    }
+  });
 }
 // @lc code=end
