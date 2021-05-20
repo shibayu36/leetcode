@@ -24,26 +24,17 @@ function mergeTwoLists(l1: ListNode | null, l2: ListNode | null): ListNode | nul
   let l1Node = l1;
   let l2Node = l2;
   while (l1Node !== null || l2Node !== null) {
-    if (l1Node === null) {
-      const node = new ListNode(l2Node!.val);
-      resultNode.next = node;
-      l2Node = l2Node!.next;
-      resultNode = node;
-    } else if (l2Node === null) {
-      const node = new ListNode(l1Node!.val);
-      resultNode.next = node;
+    const l1Val = l1Node?.val ?? Infinity;
+    const l2Val = l2Node?.val ?? Infinity;
+
+    if (l1Val <= l2Val) {
+      resultNode.next = new ListNode(l1Val);
       l1Node = l1Node!.next;
-      resultNode = node;
+      resultNode = resultNode.next;
     } else {
-      if (l1Node.val <= l2Node.val) {
-        resultNode.next = new ListNode(l1Node.val);
-        l1Node = l1Node.next;
-        resultNode = resultNode.next;
-      } else {
-        resultNode.next = new ListNode(l2Node.val);
-        l2Node = l2Node.next;
-        resultNode = resultNode.next;
-      }
+      resultNode.next = new ListNode(l2Val);
+      l2Node = l2Node!.next;
+      resultNode = resultNode.next;
     }
   }
 
