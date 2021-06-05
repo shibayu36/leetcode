@@ -33,21 +33,4 @@ function letterCombinations(digits: string): string[] {
 
   return result;
 }
-
-function _letterCombinations(digits: string, index: number): string[] {
-  if (digits.length === 0) return [];
-
-  if (index + 1 === digits.length) {
-    return digitToChars[digits.charAt(index)];
-  }
-
-  const result: string[] = [];
-  const restCombinations = _letterCombinations(digits, index + 1);
-  for (const letter of digitToChars[digits.charAt(index)]) {
-    for (const combination of restCombinations) {
-      result.push(letter + combination);
-    }
-  }
-  return result;
-}
 // @lc code=end
