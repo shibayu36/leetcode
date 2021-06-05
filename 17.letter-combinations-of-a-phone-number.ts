@@ -5,7 +5,7 @@
  */
 
 // @lc code=start
-const digitToNumbers: { [key: string]: string[] } = {
+const digitToChars: { [key: string]: string[] } = {
   "2": ["a", "b", "c"],
   "3": ["d", "e", "f"],
   "4": ["g", "h", "i"],
@@ -17,19 +17,33 @@ const digitToNumbers: { [key: string]: string[] } = {
 };
 
 function letterCombinations(digits: string): string[] {
-  return _letterCombinations(digits, 0);
+  if (digits.length === 0) return [];
+
+  let result: string[] = digitToChars[digits.charAt(0)];
+  for (let i = 1; i < digits.length; i++) {
+    const chars = digitToChars[digits.charAt(i)];
+    const newResult: string[] = [];
+    for (const r of result) {
+      for (const char of chars) {
+        newResult.push(r + char);
+      }
+    }
+    result = newResult;
+  }
+
+  return result;
 }
 
 function _letterCombinations(digits: string, index: number): string[] {
   if (digits.length === 0) return [];
 
   if (index + 1 === digits.length) {
-    return digitToNumbers[digits.charAt(index)];
+    return digitToChars[digits.charAt(index)];
   }
 
   const result: string[] = [];
   const restCombinations = _letterCombinations(digits, index + 1);
-  for (const letter of digitToNumbers[digits.charAt(index)]) {
+  for (const letter of digitToChars[digits.charAt(index)]) {
     for (const combination of restCombinations) {
       result.push(letter + combination);
     }
