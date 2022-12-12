@@ -15,28 +15,52 @@ def roman_to_int(s)
     'L' => 50,
     'C' => 100,
     'D' => 500,
-    'M' => 1000,
-    'IV' => 4,
-    'IX' => 9,
-    'XL' => 40,
-    'XC' => 90,
-    'CD' => 400,
-    'CM' => 900
+    'M' => 1000
   }
 
-  result = 0
-  index = 0
-  romans = s.chars
-  while index < romans.length
-    if num = roman2num[romans.slice(index, 2).join]
-      result += num
-      index += 2
+  answer = 0
+  prev = 0
+  s.split('').reverse.each do |roman|
+    if prev > roman2num[roman]
+      answer -= roman2num[roman]
     else
-      result += roman2num[romans[index]]
-      index += 1
+      answer += roman2num[roman]
     end
+    prev = roman2num[roman]
   end
 
-  result
+  answer
 end
+# def roman_to_int(s)
+#   roman2num = {
+#     'I' => 1,
+#     'V' => 5,
+#     'X' => 10,
+#     'L' => 50,
+#     'C' => 100,
+#     'D' => 500,
+#     'M' => 1000,
+#     'IV' => 4,
+#     'IX' => 9,
+#     'XL' => 40,
+#     'XC' => 90,
+#     'CD' => 400,
+#     'CM' => 900
+#   }
+
+#   result = 0
+#   index = 0
+#   romans = s.chars
+#   while index < romans.length
+#     if num = roman2num[romans.slice(index, 2).join]
+#       result += num
+#       index += 2
+#     else
+#       result += roman2num[romans[index]]
+#       index += 1
+#     end
+#   end
+
+#   result
+# end
 # @lc code=end
