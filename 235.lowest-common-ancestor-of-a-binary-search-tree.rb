@@ -22,22 +22,13 @@ def lowest_common_ancestor(root, p, q)
   current_node = root
 
   while current_node
-    return current_node if current_node.val == p.val || current_node.val == q.val
-
-    if p.val < current_node.val && current_node.val < q.val
-      return current_node
-    elsif q.val < current_node.val && current_node.val < p.val
-      return current_node
-    elsif p.val < current_node.val
-      current_node = current_node.left
-    elsif p.val > current_node.val
+    if current_node.val < p.val && current_node.val < q.val
       current_node = current_node.right
+    elsif p.val < current_node.val && q.val < current_node.val
+      current_node = current_node.left
+    else
+      return current_node
     end
   end
-
-  return root if root.val == p
-  return root if root.val == q
-
-  root
 end
 # @lc code=end
