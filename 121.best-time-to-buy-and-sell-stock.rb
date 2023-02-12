@@ -9,20 +9,37 @@
 # @return {Integer}
 def max_profit(prices)
   size = prices.size
-  min_price = 10 ** 5
   max_profit = 0
-  (0..size - 1).each do |index|
-    if prices[index] < min_price
-      min_price = prices[index]
-    end
+  l = 0
+  r = 1
 
-    if max_profit < prices[index] - min_price
-      max_profit = prices[index] - min_price
+  while r < size
+    if prices[r] < prices[l]
+      l = r
+    elsif prices[r] - prices[l] > max_profit
+      max_profit = prices[r] - prices[l]
     end
+    r += 1
   end
 
   max_profit
 end
+# def max_profit(prices)
+#   size = prices.size
+#   min_price = 10 ** 5
+#   max_profit = 0
+#   (0..size - 1).each do |index|
+#     if prices[index] < min_price
+#       min_price = prices[index]
+#     end
+
+#     if max_profit < prices[index] - min_price
+#       max_profit = prices[index] - min_price
+#     end
+#   end
+
+#   max_profit
+# end
 # def max_profit(prices)
 #   # At first, O(N^2) solution
 #   size = prices.size
