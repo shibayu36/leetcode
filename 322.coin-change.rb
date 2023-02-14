@@ -10,17 +10,17 @@
 # @return {Integer}
 def coin_change(coins, amount)
   dp = Array.new(amount + 1, 100_000)
-  dp[-1] = 0
+  dp[0] = 0
 
-  (0..amount).reverse_each do |i|
+  (1..amount).each do |i|
     coins.each do |coin|
       next if i < coin
 
-      dp[i - coin] = [dp[i - coin], dp[i] + 1].min
+      dp[i] = [dp[i], dp[i - coin] + 1].min
     end
   end
 
-  dp[0] == 100_000 ? -1 : dp[0]
+  dp[amount] == 100_000 ? -1 : dp[amount]
 end
 # @lc code=end
 
