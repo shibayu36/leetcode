@@ -11,8 +11,9 @@ def permute(nums)
   return [nums] if nums.size <= 1
 
   result = []
-  nums.each do |num|
-    rest = nums - [num]
+  nums.each_with_index do |num, index|
+    rest = nums.dup
+    rest.delete_at(index)
     permute(rest).each do |perm|
       result << ([num] + perm)
     end
