@@ -17,14 +17,13 @@
 # @param {ListNode} head
 # @return {Boolean}
 def hasCycle(head)
-  counter = 0
-  while head
-    counter += 1
-    head = head.next
+  fast = slow = head
 
-    if counter >= 10_001
-      return true
-    end
+  while fast && fast.next
+    fast = fast.next.next
+    slow = slow.next
+
+    return true if fast == slow
   end
 
   false
