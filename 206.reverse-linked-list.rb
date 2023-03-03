@@ -18,18 +18,15 @@
 def reverse_list(head)
   return head unless head
 
+  prev = nil
   current = head
-  next_ = head.next
-  current.next = nil
-  while next_
-    next_next = next_.next
-
-    next_.next = current
-
+  while current
+    next_ = current.next
+    current.next = prev
+    prev = current
     current = next_
-    next_ = next_next
   end
 
-  current
+  prev
 end
 # @lc code=end
