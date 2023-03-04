@@ -9,21 +9,52 @@
 # @param {String} t
 # @return {Boolean}
 def backspace_compare(s, t)
-  construct = lambda do |string|
-    res = ''
-    string.chars.each do |c|
-      if c == '#'
-        res.chop!
-      else
-        res += c
-      end
+  l_s = construct(s)
+  l_t = construct(t)
+
+  return false if l_s != l_t
+  return true if l_s == 0
+
+  s[0..l_s - 1] == t[0..l_t - 1]
+end
+
+def construct(string)
+  read = write = 0
+
+  while read < string.length
+    c = string[read]
+    if c == '#'
+      write -= 1 if write > 0
+    else
+      string[write] = c
+      write += 1
     end
-    res
+
+    read += 1
   end
 
-  construct.call(s) == construct.call(t)
+  write
 end
 # @lc code=end
+
+p(backspace_compare('ab##', 'c#d#'))
+p(backspace_compare('y#fo##f', 'y#f#o##f'))
+
+# def backspace_compare(s, t)
+#   construct = lambda do |string|
+#     res = ''
+#     string.chars.each do |c|
+#       if c == '#'
+#         res.chop!
+#       else
+#         res += c
+#       end
+#     end
+#     res
+#   end
+
+#   construct.call(s) == construct.call(t)
+# end
 
 # def backspace_compare(s, t)
 #   s_res = ''
