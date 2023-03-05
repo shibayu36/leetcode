@@ -14,16 +14,14 @@ def length_of_longest_substring(s)
   longest = 0
   location = {} # char => index
   while finish < s.length
-    if location.include?(s[finish])
+    if location.include?(s[finish]) && location[s[finish]] >= start
       current_length = finish - start
       longest = [longest, current_length].max
 
       start = location[s[finish]] + 1
-      location = (start..finish).map { |i| [s[i], i] }.to_h
-    else
-      location[s[finish]] = finish
     end
 
+    location[s[finish]] = finish
     finish += 1
   end
 
