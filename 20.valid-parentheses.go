@@ -23,27 +23,26 @@ func (s *Stack[T]) IsEmpty() bool {
 	return len(*s) == 0
 }
 
-var pairs = map[string]string{
-	"(": ")",
-	"[": "]",
-	"{": "}",
+var pairs = map[rune]rune{
+	'(': ')',
+	'[': ']',
+	'{': '}',
 }
 
 func isValid(s string) bool {
-	var stack Stack[string]
+	var stack Stack[rune]
 
-	for i := 0; i < len(s); i++ {
-		char := string(s[i])
-		if pairs[char] != "" {
+	for _, c := range s {
+		if pairs[c] != 0 {
 			// open parentheses
-			stack.Push(pairs[char])
+			stack.Push(pairs[c])
 		} else {
 			if stack.IsEmpty() {
 				return false
 			}
 
 			compare := stack.Pop()
-			if char != compare {
+			if c != compare {
 				return false
 			}
 		}
@@ -51,5 +50,34 @@ func isValid(s string) bool {
 
 	return stack.IsEmpty()
 }
+
+// var pairs = map[string]string{
+// 	"(": ")",
+// 	"[": "]",
+// 	"{": "}",
+// }
+
+// func isValid(s string) bool {
+// 	var stack Stack[string]
+
+// 	for i := 0; i < len(s); i++ {
+// 		char := string(s[i])
+// 		if pairs[char] != "" {
+// 			// open parentheses
+// 			stack.Push(pairs[char])
+// 		} else {
+// 			if stack.IsEmpty() {
+// 				return false
+// 			}
+
+// 			compare := stack.Pop()
+// 			if char != compare {
+// 				return false
+// 			}
+// 		}
+// 	}
+
+// 	return stack.IsEmpty()
+// }
 
 // @lc code=end
