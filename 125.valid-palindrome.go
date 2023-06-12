@@ -6,15 +6,20 @@
 package main
 
 import (
-	"regexp"
 	"strings"
+	"unicode"
 )
 
 // @lc code=start
 func isPalindrome(s string) bool {
-	re := regexp.MustCompile(`[^a-zA-Z0-9]+`)
-	str := strings.ToLower(s)
-	str = re.ReplaceAllString(str, "")
+	convert := func(r rune) rune {
+		if unicode.IsLetter(r) || unicode.IsNumber(r) {
+			return unicode.ToLower(r)
+		}
+
+		return -1
+	}
+	str := strings.Map(convert, s)
 
 	chars := []rune(str)
 	length := len(chars)
@@ -29,5 +34,24 @@ func isPalindrome(s string) bool {
 
 	return true
 }
+
+// func isPalindrome(s string) bool {
+// 	re := regexp.MustCompile(`[^a-zA-Z0-9]+`)
+// 	str := strings.ToLower(s)
+// 	str = re.ReplaceAllString(str, "")
+
+// 	chars := []rune(str)
+// 	length := len(chars)
+
+// 	for i := 0; i < length/2; i++ {
+// 		left := chars[i]
+// 		right := chars[length-i-1]
+// 		if left != right {
+// 			return false
+// 		}
+// 	}
+
+// 	return true
+// }
 
 // @lc code=end
