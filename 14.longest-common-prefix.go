@@ -6,8 +6,6 @@
 
 package main
 
-import "fmt"
-
 // @lc code=start
 // func longestCommonPrefix(strs []string) string {
 // 	var prefix string
@@ -44,7 +42,3 @@ func longestCommonPrefix(strs []string) string {
 }
 
 // @lc code=end
-
-func main() {
-	fmt.Println(longestCommonPrefix([]string{"ab", "a"}))
-}
