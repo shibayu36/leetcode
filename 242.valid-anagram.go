@@ -7,13 +7,14 @@ package main
 
 // @lc code=start
 func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+
 	exists := make(map[byte]int)
 
 	for i := 0; i < len(s); i++ {
 		exists[s[i]]++
-	}
-
-	for i := 0; i < len(t); i++ {
 		exists[t[i]]--
 	}
 
