@@ -28,9 +28,3 @@ func invertTree(root *TreeNode) *TreeNode {
 }
 
 // @lc code=end
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
